@@ -1545,6 +1545,118 @@
     }
     @media (max-width:420px) {
     }
+
+    /* ── GALLERY ───────────────────────────────── */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      grid-template-rows: auto auto;
+      gap: .875rem;
+      margin-top: 2.5rem;
+    }
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 14px;
+      background: var(--surf2);
+    }
+    .gallery-item:nth-child(1) { grid-row: 1 / 3; }
+    .gallery-item:nth-child(1) img { height: 100%; }
+    .gallery-item:not(:first-child) { aspect-ratio: 16/10; }
+    .gallery-item img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform .6s var(--ease);
+    }
+    .gallery-item:hover img { transform: scale(1.04); }
+    @media (max-width:640px) {
+      .gallery-grid { grid-template-columns: 1fr 1fr; }
+      .gallery-item:nth-child(1) { grid-column: 1 / 3; grid-row: auto; aspect-ratio: 16/9; }
+      .gallery-item:nth-child(1) img { height: 100%; }
+    }
+    @media (max-width:420px) {
+      .gallery-grid { grid-template-columns: 1fr; }
+      .gallery-item:nth-child(1) { grid-column: auto; }
+      .gallery-item, .gallery-item:not(:first-child) { aspect-ratio: 16/9; }
+    }
+
+    /* ── PLAY CLIPS ─────────────────────────────── */
+    .clips-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    .clip-card {
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      background: var(--surf2);
+      aspect-ratio: 16/9;
+      cursor: pointer;
+    }
+    .clip-card video {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+    }
+    .clip-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      background: linear-gradient(to top, rgba(7,9,13,.75) 0%, transparent 55%);
+      padding: .875rem 1rem;
+      pointer-events: none;
+    }
+    .clip-label {
+      font-size: .78rem; font-weight: 700;
+      color: rgba(255,255,255,.92); letter-spacing: .01em;
+    }
+    .clip-sound-btn {
+      pointer-events: all;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 9999px;
+      padding: .28rem .75rem;
+      font-size: .65rem; font-weight: 700;
+      color: rgba(255,255,255,.8);
+      cursor: pointer; display: flex; align-items: center; gap: .3rem;
+      transition: background .2s, border-color .2s;
+      font-family: var(--f);
+    }
+    .clip-sound-btn:hover { background: rgba(82,242,255,.15); border-color: var(--cyan); color: var(--cyan); }
+    .clip-play-icon {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(255,255,255,.18); border: 1.5px solid rgba(255,255,255,.35);
+      display: flex; align-items: center; justify-content: center;
+      transition: opacity .3s;
+    }
+    .clip-card.playing .clip-play-icon { opacity: 0; }
+    @media (max-width:640px) {
+      .clips-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── VISIT EXTERIOR PHOTOS ──────────────────── */
+    .visit-photos {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: .75rem;
+      margin-bottom: 2rem;
+    }
+    .visit-photo {
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+    }
+    .visit-photo img {
+      width: 100%; height: 100%;
+      object-fit: cover; display: block;
+      transition: transform .5s var(--ease);
+    }
+    .visit-photo:hover img { transform: scale(1.03); }
+    @media (max-width:480px) {
+      .visit-photos { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
@@ -1890,6 +2002,105 @@
   </div>
 </section>
 
+<!-- ─── GALLERY ─────────────────────────────── -->
+<section id="gallery" class="section" aria-labelledby="gallery-title">
+  <div class="wrap">
+    <span class="s-label r">체험 현장</span>
+    <h2 class="s-title r d1" id="gallery-title">쇼미더VR<br>덕천점 현장</h2>
+    <p class="s-body r d2">실제 매장과 체험 공간을 직접 확인해보세요.</p>
+    <div class="gallery-grid r d3">
+      <div class="gallery-item">
+        <img src="./동영상 및 사진/롤러코스터전경사진.jpg" alt="롤러코스터 VR 체험 전경" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="./동영상 및 사진/단체학교사진.png" alt="단체 학교 방문 체험" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="./동영상 및 사진/파우더룸.jpg" alt="파우더룸 시설" loading="lazy">
+      </div>
+      <div class="gallery-item">
+        <img src="./동영상 및 사진/입구사진.jpg" alt="매장 입구" loading="lazy">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PLAY CLIPS ──────────────────────────── -->
+<section id="clips" class="section" aria-labelledby="clips-title">
+  <div class="wrap">
+    <span class="s-label r">플레이 영상</span>
+    <h2 class="s-title r d1" id="clips-title">이런 체험을<br>즐길 수 있어요</h2>
+    <p class="s-body r d2">실제 매장에서 촬영한 플레이 영상입니다.</p>
+    <div class="clips-grid r d3">
+
+      <div class="clip-card" data-src="./동영상 및 사진/어른 멀티플레이게임(시리어스샘).mp4">
+        <video muted loop playsinline preload="metadata">
+          <source src="./동영상 및 사진/어른 멀티플레이게임(시리어스샘).mp4" type="video/mp4">
+        </video>
+        <div class="clip-play-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="clip-overlay">
+          <span class="clip-label">어른 멀티플레이 · 시리어스샘</span>
+          <button class="clip-sound-btn" aria-label="소리 켜기">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            소리 꺼짐
+          </button>
+        </div>
+      </div>
+
+      <div class="clip-card" data-src="./동영상 및 사진/어린이게임(산타게임).mp4">
+        <video muted loop playsinline preload="metadata">
+          <source src="./동영상 및 사진/어린이게임(산타게임).mp4" type="video/mp4">
+        </video>
+        <div class="clip-play-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="clip-overlay">
+          <span class="clip-label">어린이 게임 · 산타게임</span>
+          <button class="clip-sound-btn" aria-label="소리 켜기">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            소리 꺼짐
+          </button>
+        </div>
+      </div>
+
+      <div class="clip-card" data-src="./동영상 및 사진/학교단체게임(스매쉬 박스).mp4">
+        <video muted loop playsinline preload="metadata">
+          <source src="./동영상 및 사진/학교단체게임(스매쉬 박스).mp4" type="video/mp4">
+        </video>
+        <div class="clip-play-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="clip-overlay">
+          <span class="clip-label">단체 게임 · 스매쉬 박스</span>
+          <button class="clip-sound-btn" aria-label="소리 켜기">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            소리 꺼짐
+          </button>
+        </div>
+      </div>
+
+      <div class="clip-card" data-src="./동영상 및 사진/학생 멀티게임 (비트세이버).mp4">
+        <video muted loop playsinline preload="metadata">
+          <source src="./동영상 및 사진/학생 멀티게임 (비트세이버).mp4" type="video/mp4">
+        </video>
+        <div class="clip-play-icon">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="white" aria-hidden="true"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+        </div>
+        <div class="clip-overlay">
+          <span class="clip-label">학생 멀티게임 · 비트세이버</span>
+          <button class="clip-sound-btn" aria-label="소리 켜기">
+            <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg>
+            소리 꺼짐
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
 <!-- ─── 5. VIDEO 2 ───────────────────────────── -->
 <section id="vid2" class="vid-section" aria-label="몰입형 VR 체험">
   <div class="vid-wrap">
@@ -2118,6 +2329,14 @@
   <div class="wrap">
     <span class="s-label r">오시는 길</span>
     <h2 class="s-title r d1" id="visit-title">찾아오시기 편한<br>쇼미더브이알 덕천점</h2>
+    <div class="visit-photos r d2">
+      <div class="visit-photo">
+        <img src="./동영상 및 사진/외부간판 낮 사진.jpg" alt="쇼미더VR 덕천점 외관 낮" loading="lazy">
+      </div>
+      <div class="visit-photo">
+        <img src="./동영상 및 사진/외경 야간 간판사진.jpg" alt="쇼미더VR 덕천점 외관 야간" loading="lazy">
+      </div>
+    </div>
     <div class="visit-grid">
       <div class="visit-items">
         <div class="r d1">
@@ -2516,6 +2735,51 @@
         lastTime = t;
       });
     }
+  })();
+
+  /* ── PLAY CLIPS ─────────────────────────────── */
+  (function() {
+    const SVG_MUTE = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></svg> 소리 꺼짐';
+    const SVG_SOUND = '<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg> 소리 켜짐';
+
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        const video = e.target.querySelector('video');
+        if (!video) return;
+        if (e.isIntersecting) { video.play().catch(()=>{}); }
+        else { video.pause(); }
+      });
+    }, { threshold: 0.35 });
+
+    document.querySelectorAll('.clip-card').forEach(card => {
+      const video = card.querySelector('video');
+      const soundBtn = card.querySelector('.clip-sound-btn');
+      const playIcon = card.querySelector('.clip-play-icon');
+
+      io.observe(card);
+
+      card.addEventListener('click', (e) => {
+        if (e.target.closest('.clip-sound-btn')) return;
+        if (video.paused) {
+          video.play().catch(()=>{});
+          card.classList.add('playing');
+        } else {
+          video.pause();
+          card.classList.remove('playing');
+        }
+      });
+
+      video.addEventListener('play', () => card.classList.add('playing'));
+      video.addEventListener('pause', () => card.classList.remove('playing'));
+
+      if (soundBtn) {
+        soundBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          video.muted = !video.muted;
+          soundBtn.innerHTML = video.muted ? SVG_MUTE : SVG_SOUND;
+        });
+      }
+    });
   })();
 
   /* ── FAQ ACCORDION ──────────────────────────── */
