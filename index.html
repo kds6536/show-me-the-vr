@@ -532,17 +532,40 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: .4rem;
+      gap: .5rem;
+      opacity: 1;
+      transition: opacity .6s ease;
+      cursor: pointer;
     }
-    .hero-scroll-line {
-      width: 1px;
-      height: 40px;
-      background: linear-gradient(to bottom, rgba(242,243,245,0), rgba(242,243,245,.32));
-      animation: scrollPulse 2s cubic-bezier(0.4,0,0.6,1) infinite;
+    .hero-scroll-hint.hidden { opacity: 0; pointer-events: none; }
+    .hero-scroll-label {
+      font-size: .6rem;
+      font-weight: 700;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: rgba(242,243,245,.55);
     }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: .4; transform: scaleY(1); }
-      50% { opacity: 1; transform: scaleY(1.12); }
+    .hero-scroll-arrow {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      animation: bounceDown 1.6s ease-in-out infinite;
+    }
+    .hero-scroll-arrow span {
+      display: block;
+      width: 10px;
+      height: 10px;
+      border-right: 1.5px solid rgba(242,243,245,.7);
+      border-bottom: 1.5px solid rgba(242,243,245,.7);
+      transform: rotate(45deg);
+    }
+    .hero-scroll-arrow span:nth-child(1) { opacity: .3; }
+    .hero-scroll-arrow span:nth-child(2) { opacity: .6; }
+    .hero-scroll-arrow span:nth-child(3) { opacity: 1; }
+    @keyframes bounceDown {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(6px); }
     }
 
     @media (max-width:640px) {
@@ -551,7 +574,6 @@
       .hero-cards { flex-direction: column; align-items: center; }
       .hero-card { width: min(100%, 300px); }
       .hero-btn-primary, .hero-btn-secondary { padding: .8rem 1.75rem; font-size: .85rem; }
-      .hero-scroll-hint { display: none; }
     }
 
     /* ══════════════════════════════════════════════
@@ -1753,8 +1775,13 @@
     </div>
   </div>
 
-  <div class="hero-scroll-hint" aria-hidden="true">
-    <div class="hero-scroll-line"></div>
+  <div class="hero-scroll-hint" id="scrollHint" aria-hidden="true">
+    <span class="hero-scroll-label">scroll</span>
+    <div class="hero-scroll-arrow">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
 </section>
 
@@ -2831,6 +2858,21 @@
     }, { threshold: 0.65 });
 
     observer.observe(hero);
+
+    /* ── 스크롤 힌트 숨기기 ── */
+    const scrollHint = document.getElementById('scrollHint');
+    if (scrollHint) {
+      const hideHint = () => {
+        if (window.scrollY > 80) {
+          scrollHint.classList.add('hidden');
+          window.removeEventListener('scroll', hideHint);
+        }
+      };
+      window.addEventListener('scroll', hideHint, { passive: true });
+      scrollHint.addEventListener('click', () => {
+        window.scrollBy({ top: window.innerHeight * 0.85, behavior: 'smooth' });
+      });
+    }
 
     /* ── 영상 루프 감지 → 애니메이션 재시작 ── */
     const heroVideo = hero.querySelector('video');
